@@ -25,5 +25,20 @@
          (is (= (doexpr "100000+20") 100020))
          (is (= (doexpr "(10+1)*(90+10)") 1100)))
 
+(deftest t-doexpr-double
+         (is (= (Double/compare (doexpr "10.1+20.4") 30.5)) 0)
+         (is (= (Double/compare (doexpr "0.1+5.4") 5.5)) 0)
+         (is (= (Double/compare (doexpr "1.00001+0.0") 1.00001)) 0)
+         (is (= (Double/compare (doexpr "1.00001+1.0") 2.00001)) 0)
+         (is (= (Double/compare (doexpr "1.00001+0") 1.00001)) 0)
+         (is (= (Double/compare (doexpr "1.00001+0.1") 1.10001)) 0)
+         (is (= (Double/compare (doexpr "0.1*2.4") 0.24)) 0)
+         (is (= (Double/compare (doexpr "0.1*0.1") 0.01)) 0)
+         (is (= (Double/compare (doexpr "10.1*1") 10.1)) 0)
+         (is (= (Double/compare (doexpr "10.1*1.0") 10.1)) 0)
+         (is (= (Double/compare (doexpr "10.1*1.1") 11.11)) 0)
+         (is (= (Double/compare (doexpr "(10.1+20.4)*0.1") 3.05)) 0))
+
+
 (time (run-tests))
 

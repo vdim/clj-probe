@@ -23,7 +23,6 @@
 ; is stored in :result.
 (defstruct my-state-s :remainder :result)
 
-(def digit (lit-alt-seq "0123456789"))
 
 (defn change-res 
   "Changes result (res is stack with elements of expression) due to function (f):
@@ -32,12 +31,17 @@
   [f res]
   (cons (f (first res) (second res)) (rest (rest res))))
 
+(def digit (lit-alt-seq "0123456789"))
+
+(def double-number
+  ^{:doc "Parser for double numbers"}
+  (conc (rep+ digit) (opt (conc (lit \.) (rep+ digit)))))
 
 (declare expr)
 (def f (alt (conc (lit \() expr (lit \)))
-            (complex [number (rep+ digit),
+            (complex [number double-number 
                       res (get-info :result)
-                      si (set-info :result (cons (Integer/parseInt (apply str number)) res))]
+                      si (set-info :result (cons (Double/parseDouble (apply str (flatten number))) res))]
                      number)))
 
 (def t-prime (alt (conc 
@@ -67,3 +71,5 @@
   "Computes simple arithmetic expression."
   [e]
   (first (:result ((expr (struct my-state-s (seq e) ())) 1))))
+
+(doexpr "10.3")
