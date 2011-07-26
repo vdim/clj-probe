@@ -26,6 +26,14 @@
 
 (def digit (lit-alt-seq "0123456789"))
 
+(defn change-res 
+  "Changes result (res is stack with elements of expression) due to function (f):
+  applies f to first and second elements of results and then builds list of
+  result of f and rest of res."
+  [f res]
+  (cons (f (first res) (second res)) (rest (rest res))))
+
+
 (declare expr)
 (def f (alt (conc (lit \() expr (lit \)))
             (complex [dig digit,
@@ -33,26 +41,26 @@
                       si (set-info :result (cons (Integer/parseInt (.toString dig)) res))]
                      dig)))
 
-(def t-second (alt (conc 
+(def t-prime (alt (conc 
                      (lit \*) 
                      (complex 
                        [ff f
                         res (get-info :result)
-                        si (set-info :result (cons (* (first res) (second res)) (rest (rest res))))]
+                        si (set-info :result (change-res * res))]
                        ff) 
-                     t-second) emptiness))
+                     t-prime) emptiness))
 
-(def t (conc f t-second))
+(def t (conc f t-prime))
 
-(def e-second (alt (conc
+(def e-prime (alt (conc
                      (lit \+)
                      (complex 
                        [tt t
                         res (get-info :result)
-                        si (set-info :result (cons (+ (first res) (second res)) (rest (rest res))))]
+                        si (set-info :result (change-res + res))]
                        tt)
                     
-                     e-second) emptiness))
+                     e-prime) emptiness))
 
 (def expr (conc t e-second))
 
