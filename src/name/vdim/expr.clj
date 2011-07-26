@@ -15,7 +15,7 @@
 ;;    digit -> [0-9]+
 
 
-(ns name.vdim
+(ns name.vdim.expr
   (:use name.choi.joshua.fnparse 
         clojure.contrib.test-is))
 
