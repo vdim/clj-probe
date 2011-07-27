@@ -51,10 +51,17 @@
          (is (= (doexpr "10+2-1") 11)))
 
 (deftest auto-simple-test
-         ^{:doc "Checks simple expression due to library gen-expr-test"}
+         ^{:doc "Checks simple expression due to library gen-expr"}
          (dotimes [n 100] 
-           (let [simple-test (gen-simple-expr)]
-             (is (= (doexpr (first simple-test)) (second simple-test))))))
+           (let [t (gen-simple-expr)]
+             (is (= (doexpr (first t)) (second t))))))
+
+(deftest auto-complex-type-1-test
+         ^{:doc "Checks comples expressions of type 1 due to library gen-expr"}
+         (dotimes [n 100] 
+           (let [t (gen-simple-expr)]
+             (is (= (doexpr (first t)) (second t))))))
+
 
 
 (time (run-tests))

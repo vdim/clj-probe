@@ -20,3 +20,15 @@
         s-arg (rand 1000)
         op (round (rand 3))]
     [(str f-arg (nth opers-ch op) s-arg) ((nth opers op) f-arg s-arg)]))
+
+(defn gen-complex-expr-type1
+  "Generates complex expressions like this:
+  (number op number) op (number op number)"
+  []
+  (let [[f-str f-res] (gen-simple-expr)
+        [s-str s-res] (gen-simple-expr)
+        op (round (rand 3))]
+    [(str \( f-str \) (nth opers-ch op) \( s-str \))
+     ((nth opers op) f-res s-res)]))
+
+(gen-complex-expr-type1)
