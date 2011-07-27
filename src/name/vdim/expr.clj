@@ -24,11 +24,7 @@
 (defstruct my-state-s :remainder :result :fn)
 
 ; Some helper functions.
-(defmacro create-fn
-  [oper & args]
-  `(~(symbol (.toString oper)) ~@args))
-
-(defn do-eval
+(defn- do-eval
   "Changes result (res is stack with elements of expression) due to function (f):
   applies f to first and second elements of results and then builds list of
   result of f and rest of res."
