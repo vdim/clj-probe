@@ -19,7 +19,4 @@
   (let [f-arg (rand 1000)
         s-arg (rand 1000)
         op (round (rand 3))]
-    (do
-      (println f-arg)
-      (println s-arg)
-    [(str f-arg (nth opers-ch op) s-arg) ((nth opers op) f-arg s-arg)])))
+    [(str f-arg (nth opers-ch op) s-arg) ((nth opers op) f-arg s-arg)]))
