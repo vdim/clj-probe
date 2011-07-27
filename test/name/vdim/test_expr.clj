@@ -52,10 +52,9 @@
 
 (deftest auto-simple-test
          ^{:doc "Checks simple expression due to library gen-expr-test"}
-         (let [simple-test (gen-simple-expr)]
-               (is (= (doexpr (first simple-test)) (second simple-test)))) 
-         (let [simple-test (gen-simple-expr)]
-               (is (= (doexpr (first simple-test)) (second simple-test)))))
+         (dotimes [n 100] 
+           (let [simple-test (gen-simple-expr)]
+             (is (= (doexpr (first simple-test)) (second simple-test))))))
 
 
 (time (run-tests))
