@@ -78,4 +78,3 @@
   "Computes simple arithmetic expression."
   [e]
   (first (:result ((expr (struct my-state-s (seq e) ())) 1))))
-

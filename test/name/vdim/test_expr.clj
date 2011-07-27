@@ -1,5 +1,5 @@
 (ns name.vdim.test-expr
-  (:use name.vdim.expr clojure.contrib.test-is))
+  (:use name.vdim.expr name.vdim.gen-expr clojure.contrib.test-is))
 
 (deftest t-doexpr
          ^{:doc "Checks simple expression"}
@@ -50,7 +50,12 @@
          (is (= (doexpr "10-2") (- 10.0 2)))
          (is (= (doexpr "10+2-1") 11)))
 
+(deftest auto-simple-test
+         ^{:doc "Checks simple expression due to library gen-expr-test"}
+         (let [simple-test (gen-simple-expr)]
+               (is (= (doexpr (first simple-test)) (second simple-test)))) 
+         (let [simple-test (gen-simple-expr)]
+               (is (= (doexpr (first simple-test)) (second simple-test)))))
 
 
 (time (run-tests))
-
