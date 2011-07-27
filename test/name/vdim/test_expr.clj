@@ -51,17 +51,15 @@
          (is (= (doexpr "10-2") (- 10.0 2)))
          (is (= (doexpr "10+2-1") 11)))
 
-(deftest auto-simple-test
-         ^{:doc "Checks simple expression due to library gen-expr"}
-         (dotimes [n 100] 
-           (let [t (gen-simple-expr)]
-             (is (= (doexpr (first t)) (second t))))))
+(defmacro create-auto-tests
+  ""
+  [name-gen-expr]
+  `(deftest ~(gensym)
+            (dotimes [n# 100] 
+              (let [t# (~name-gen-expr)]
+                (is (= (doexpr (first t#)) (second t#)))))))
 
-(deftest auto-complex-type-1-test
-         ^{:doc "Checks comples expressions of type 1 due to library gen-expr"}
-         (dotimes [n 100] 
-           (let [t (gen-complex-expr-type1)]
-             (is (= (doexpr (first t)) (second t))))))
-
+(create-auto-tests gen-simple-expr)
+(create-auto-tests gen-complex-expr-type1)
 
 (time (run-tests))

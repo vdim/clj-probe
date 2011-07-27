@@ -30,5 +30,3 @@
         op (round (rand 3))]
     [(str \( f-str \) (nth opers-ch op) \( s-str \))
      ((nth opers op) f-res s-res)]))
-
-(gen-complex-expr-type1)
