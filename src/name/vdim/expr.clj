@@ -31,20 +31,6 @@
   "Changes result (res is stack with elements of expression) due to function (f):
   applies f to first and second elements of results and then builds list of
   result of f and rest of res."
-  [st res]
-  (let [f-arg (first res)
-        s-arg (second res)
-        lres (cond (= st \+) (+ s-arg f-arg)
-                   (= st \*) (* s-arg f-arg)
-                   (= st \/) (/ s-arg f-arg)
-                   (= st \-) (- s-arg f-arg)
-                   :else 0)]
-    (do
-      (println st)
-      (println lres)
-    (cons lres (rest (rest res))))))
-
-(defn do-eval-simple
   [f res]
   (cons (f (second res) (first res)) (rest (rest res))))
 
@@ -66,7 +52,7 @@
                      (complex 
                        [ff f
                         res (get-info :result)
-                        si (set-info :result (do-eval-simple * res))]
+                        si (set-info :result (do-eval * res))]
                        ff) 
                      t-prime) 
                   (conc 
@@ -74,7 +60,7 @@
                      (complex 
                        [ff f
                         res (get-info :result)
-                        si (set-info :result (do-eval-simple / res))]
+                        si (set-info :result (do-eval / res))]
                        ff) 
                      t-prime) 
 
@@ -87,7 +73,7 @@
                      (complex 
                        [tt t
                         res (get-info :result)
-                        si (set-info :result (do-eval-simple + res))]
+                        si (set-info :result (do-eval + res))]
                        tt)                    
                      e-prime) 
                   (conc
@@ -95,7 +81,7 @@
                      (complex 
                        [tt t
                         res (get-info :result)
-                        si (set-info :result (do-eval-simple - res))]
+                        si (set-info :result (do-eval - res))]
                        tt)                    
                      e-prime) 
                  
