@@ -26,6 +26,7 @@
          (is (= (doexpr "(10+1)*(90+10)") 1100)))
 
 (deftest t-doexpr-double
+         ^{:doc "Checks expressions with double number."}
          (is (= (Double/compare (doexpr "10.1+20.4") 30.5)) 0)
          (is (= (Double/compare (doexpr "0.1+5.4") 5.5)) 0)
          (is (= (Double/compare (doexpr "1.00001+0.0") 1.00001)) 0)
@@ -38,6 +39,17 @@
          (is (= (Double/compare (doexpr "10.1*1.0") 10.1)) 0)
          (is (= (Double/compare (doexpr "10.1*1.1") 11.11)) 0)
          (is (= (Double/compare (doexpr "(10.1+20.4)*0.1") 3.05)) 0))
+
+(deftest div
+         ^{:doc "Checks division"}
+         (is (= (doexpr "10/2") (/ 10.0 2)))
+         (is (= (doexpr "10.0/2") (/ 10.0 2))))
+
+(deftest sub
+         ^{:doc "Checks subtraction."}
+         (is (= (doexpr "10-2") (- 10.0 2)))
+         (is (= (doexpr "10+2-1") 11)))
+
 
 
 (time (run-tests))
