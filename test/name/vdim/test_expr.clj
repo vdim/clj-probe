@@ -61,5 +61,3 @@
 
 (create-auto-tests gen-simple-expr)
 (create-auto-tests gen-complex-expr-type1)
-
-(time (run-tests))
