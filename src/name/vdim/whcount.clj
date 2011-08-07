@@ -18,7 +18,7 @@
   [date-string date-format field]
   (. (create-cal date-string date-format) get field))
 
-(defn simple-get-hours
+(defn get-hours
   "Returns number representation of hours.
   If param hours is not valid then 0 is returned."
   [hours]
@@ -45,7 +45,7 @@
              key-value (func vec-wh),
              map-for-year (get %1 year),
              old-value (let [v (get map-for-year  key-value)] (if (nil? v) 0 v))]
-         (assoc %1 year (assoc map-for-year key-value (+ old-value (simple-get-hours (vec-wh 2)))))))
+         (assoc %1 year (assoc map-for-year key-value (+ old-value (get-hours (vec-wh 2)))))))
     {}
     (line-seq (reader filename))))
 
