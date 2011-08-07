@@ -1,7 +1,7 @@
 ;; Counting some statistic from file with developer's working hours, e.g.
 ;; sum of hours and etc.
 
-(ns name.vdim
+(ns name.vdim.whcount
   [:use clojure.contrib.str-utils 
    [clojure.contrib.duck-streams :only (reader)]])
 
