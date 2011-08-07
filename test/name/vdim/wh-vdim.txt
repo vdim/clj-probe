@@ -1,0 +1,10 @@
+# If line is started with "#" symbol, then line is comment.
+# Also empty line is allowed, such as next.
+
+# <date> <activity> <count of hours> <description>
+
+06.08.2011  CO  1   Coding get-stat function for whcount library
+06.08.2011  TE  0.5   Testing get-stat function 
+06.08.2011  ME  1   Meeting with team leader.
+
+# and so on.
