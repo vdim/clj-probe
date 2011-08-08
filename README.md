@@ -9,3 +9,5 @@ library for generating tests for checking grammar of expressions.
 library for getting some kinds of statistics from developer`s working hours file 
 (description of file format see in code with 
 [tests functions] (https://github.com/vdim/clj-probe/blob/master/test/name/vdim/test_whcount.clj)).
+* [docs.clj] (https://github.com/vdim/clj-probe/blob/master/src/name/vdim/docs.clj) - 
+improvement of find-doc function from clojure.name.
