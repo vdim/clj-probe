@@ -14,7 +14,6 @@
   [n]
   (flatten
     (map
-      #(for [v (ns-vars %)
-             :when (re-seq (re-pattern n) (str v))] v)
+      #(filter (fn [x] (re-seq (re-pattern n) (str x))) (ns-vars %))
       (all-ns))))
 
