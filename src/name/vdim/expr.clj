@@ -46,7 +46,14 @@
 
 
 ; Rules of grammar are below. See BNF in the begining of file.
-(def digit (lit-alt-seq "0123456789"))
+(def digit
+  ^{:doc "Sequence of digits."}
+  (lit-alt-seq "0123456789"))
+
+(def whitespaces 
+  ^{:doc "Set of whitespaces"}
+  (lit-alt-seq " \t\n"))
+
 
 (def double-number
   ^{:doc "Parser for double numbers"}
@@ -78,3 +85,33 @@
   "Computes simple arithmetic expression."
   [e]
   (first (:result ((expr (struct my-state-s (seq e) ())) 1))))
+
+(defn myplus
+  [state]
+  (let [strn (:remainder state)]
+    (if (= (first (:remainder state)) \space)
+      (list (:assoc state :result (str "+")) (*remainder-setter* state (rest strn))))))
+
+(defn whitesps
+  [state]
+  (let [strn (:remainder state) 
+        res (:result state)]
+    (if (= (first strn) \space)
+      (list  (*remainder-setter* state (rest strn))))))
+
+
+(def gen-tokens
+  (rep+ (complex 
+          [res (alt myplus whitesps)]
+;           r (get-info :result)
+;           si (set-info :result (inc r))]
+          res)))
+
+(defn do-gen
+  "Computes simple arithmetic expression."
+  [e]
+  (:result ((gen-tokens (struct my-state-s (seq e) "")) 1)))
+
+;(do-gen "+++++")
+;(gen-tokens (struct my-state-s (seq "+++++") 0))
+;(gen-tokens "+++++")
