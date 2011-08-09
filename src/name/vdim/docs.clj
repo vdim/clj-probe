@@ -17,11 +17,11 @@
 (defn filter-ns
   "Checks input regex (or string, or vector) and then 
   filters list of all namespaces by f-ns function."
-  [re]
-  (if re
+  [re-or-s-or-seq]
+  (if re-or-s-or-seq
     (if
-      (or (string? re) (= (class re) Pattern)) (f-ns re)
-      (flatten (map #(f-ns %) re)))
+      (or (string? re-or-s-or-seq) (= (class re-or-s-or-seq) Pattern)) (f-ns re-or-s-or-seq)
+      (flatten (map #(f-ns %) re-or-s-or-seq)))
     (all-ns)))
 
 (defn find-name
@@ -35,15 +35,15 @@
             (filter (fn [x] (re-seq (re-pattern n) (str x))) (ns-vars %)))
       (filter-ns ns))))
 
-(defn ifind-doc
+(defn ex-find-doc
   "Extented version of find-doc function.
   First param is specified regex for name.
   Then different settings is followed.
     :ns <pattern> - define namespace(s) where name is searched.
     :settings (must be set for correct getting) - different settings, which are include:
         :print-doc - define whether doc-string for symbol is printed."
-  [re-or-s-or-map & {:keys [ns settings]}]
-  (let [lvars (find-name re-or-s-or-map ns)]
+  [re-or-s-or-seq & {:keys [ns settings]}]
+  (let [lvars (find-name re-or-s-or-seq ns)]
     (if (contains? settings :print-doc)
       (doseq [item lvars] (print-doc item))
       lvars)))
