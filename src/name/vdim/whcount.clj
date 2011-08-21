@@ -66,7 +66,7 @@
     #(cond (< %1 30) :full-fail 
            (< %1 40) :fail
            (< %1 50) :so-so
-           (< %1 70) :success) 
+           :else :success) 
     flatten-hours-on-week))
 
 (defn count-marks
