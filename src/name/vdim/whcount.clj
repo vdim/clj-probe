@@ -55,9 +55,9 @@
   (key is number of week, value is hours in this week). 
   For example: {{1 10 2 20 3 30} {1 5 2 25 3 25}}"
   [filename]
-  (vals (count-hours-on-value 
+  (count-hours-on-value 
           filename 
-          #(get-calendar-value (%1 0) "dd.MM.yyyy" (java.util.Calendar/WEEK_OF_YEAR)))))
+          #(get-calendar-value (%1 0) "dd.MM.yyyy" (java.util.Calendar/WEEK_OF_YEAR))))
 
 (defn get-marks-on-week 
   "Gets list with distribution hours on week and returns mark of each week."
@@ -121,20 +121,34 @@
   [year-hours pretty-name-keys] 
   (reduce #(str %1 "\n[" (%2 0) "]" (pprint-map (%2 1) pretty-name-keys)) "" year-hours))
 
+
+(defn pprint-marks
+  "Pretty prints marks of week."
+  [hours-on-week]
+  (str "Marks:"
+       (reduce (fn [s [k v]] 
+                 (let [marks (get-marks-on-week (vals v))]
+                   (str s "\n[" k "]" \newline
+                        "\tCount of full fail weeks: " (count-marks :full-fail marks) \newline 
+                        "\tCount of fail weeks: " (count-marks :fail marks) \newline
+                        "\tCount of so-so weeks: " (count-marks :so-so marks) \newline
+                        "\tCount of success weeks: " (count-marks :success marks)))) 
+               "" hours-on-week)))
+
+
 (defn get-stats [filename]
   (let [hours-on-week (get-hours-on-week filename)
-        flatten-hours-on-week (reduce #(flatten (cons %1 (vals %2))) () hours-on-week)
+        flatten-hours-on-week (reduce #(flatten (cons %1 (vals %2))) () (vals hours-on-week))
         marks-on-week (get-marks-on-week flatten-hours-on-week)
         weeks (count flatten-hours-on-week)
         hours (apply + flatten-hours-on-week)]
     (println "Total hours: ", hours)
+    (println "Hours by year: " (reduce (fn [m [k v]] (assoc m k (apply + (vals v))))
+                                       {} hours-on-week))
     (println "Count of weeks: " weeks)
     (println "Hours on weeks: " flatten-hours-on-week)
     (println "Sorted hours on weeks: " (sort flatten-hours-on-week))
-    (println "Count of full fail weeks: " (count-marks :full-fail marks-on-week))
-    (println "Count of fail weeks: " (count-marks :fail marks-on-week))
-    (println "Count of so-so weeks: " (count-marks :so-so marks-on-week))
-    (println "Count of success weeks: " (count-marks :success marks-on-week))
+    (println (pprint-marks hours-on-week))
     (println "Average hours on week: ", (/ (double hours) weeks))
     (println "Max on week: ", (apply max flatten-hours-on-week))
     (println "Min on week: ", (apply min flatten-hours-on-week))
